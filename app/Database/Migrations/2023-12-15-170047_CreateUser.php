@@ -35,10 +35,6 @@ class CreateUser extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
-            'dob' => [
-                'type' => 'DATE',
-                'null' => true,
-            ],
             'created_at' => [
                 'type'    => 'TIMESTAMP',
                 'default' => new RawSql('CURRENT_TIMESTAMP'),
