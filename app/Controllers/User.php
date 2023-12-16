@@ -10,4 +10,8 @@ class User extends BaseController
     {
         return view('login');
     }
+
+    public function register(){
+        return view('register');
+    }
 }

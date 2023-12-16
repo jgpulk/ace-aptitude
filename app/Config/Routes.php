@@ -10,3 +10,4 @@ $routes->get('/test', 'Test::index');
 
 // User Auth
 $routes->get('/user/login', 'User::index');
+$routes->get('/user/register', 'User::register');
