@@ -16,6 +16,6 @@ class UserModel extends Model
 
     public function registerUser($data){
         $this->insert($data);
-        return false;
+        return true;
     }
 }
