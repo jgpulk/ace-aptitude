@@ -18,4 +18,15 @@ class UserModel extends Model
         $this->insert($data);
         return true;
     }
+
+    public function loginUser($data){
+        $user = $this->select('id, password')->where('email', $data['email'])->first();
+        if(!$user){
+            return ['status'=> false, 'message'=> 'No user found'];
+        }
+        if($user['password'] != $data['password']){
+            return ['status'=> false, 'message'=> 'Incorrect password/email'];
+        }
+        return ['status'=> true];
+    }
 }

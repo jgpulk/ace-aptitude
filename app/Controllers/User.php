@@ -51,4 +51,33 @@ class User extends BaseController
             throw $th;
         }
     }
+
+    public function login_submission(){
+        try {
+            $session = \Config\Services::session();
+            $rules = [
+                'email' => 'required|valid_email',
+                'password' => 'required',
+            ];
+            if($this->validate($rules)){
+                $userModel = new UserModel();
+                $user = array(
+                    'email' => $this->request->getPost('email'),
+                    'password' => $this->request->getPost('password')
+                );
+                $result = $userModel->loginUser($user);
+                if($result['status']){
+                    return view('profile');
+                } else{
+                    $session->setFlashdata('error_message', $result['message']);
+                    return redirect()->to('user/login');
+                }
+            } else{
+                $data['validation_errors'] = $this->validator->getErrors();
+                return view('login', $data);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

@@ -61,7 +61,7 @@
     </div>
 
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form action="<?php echo base_url('user/login') ?>" method="post">
             <img class="mb-4 mx-auto d-block" src="https://seeklogo.com/images/E/education-circle-logo-7FB9212F5A-seeklogo.com.png" alt="" width="100" height="100">
             <h1 class="h3 mb-3 fw-normal text-center">Please log in</h1>
 
@@ -72,14 +72,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <?php } ?>
+            <?php if (session()->getFlashdata('error_message') !== NULL){?>
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?php echo session()->getFlashdata('error_message'); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php } ?>
             <!-- End of alerts -->
+            <?php 
+              if(isset($validation_errors)){
+                echo "<pre>";
+                print_r($validation_errors);
+                echo "</pre>";
+              }
+            ?>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                 <label for="floatingPassword">Password</label>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
