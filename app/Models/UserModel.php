@@ -27,6 +27,6 @@ class UserModel extends Model
         if($user['password'] != $data['password']){
             return ['status'=> false, 'message'=> 'Incorrect password/email'];
         }
-        return ['status'=> true];
+        return ['status'=> true, 'userid'=> $user['id']];
     }
 }

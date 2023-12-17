@@ -67,6 +67,11 @@ class User extends BaseController
                 );
                 $result = $userModel->loginUser($user);
                 if($result['status']){
+                    $userdata = [
+                        'is_user_logged_in' => 1,
+                        'user_id' => $result['userid']
+                    ];
+                    $session->set($userdata);
                     return view('profile');
                 } else{
                     $session->setFlashdata('error_message', $result['message']);
