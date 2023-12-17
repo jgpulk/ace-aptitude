@@ -15,36 +15,53 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-7 py-5">
                         <h3>Register</h3>
+                        <?php 
+                            if(Isset($validation_errors)){
+                                echo "<pre>";
+                                print_r($validation_errors);
+                                echo "</pre>";
+                            }
+                        ?>
                         <p class="mb-4">"Believe you can and you're halfway there" -Theodore Roosevelt</p>
-                        <form>
+
+                        <!-- Alerts -->
+                        <?php if (session()->getFlashdata('error_message') !== NULL){?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php echo session()->getFlashdata('error_message'); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php } ?>
+                        <!-- End of alerts -->
+                        
+                        <form action="<?php echo base_url('user/register') ?>" method="post">
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <div class="form-group first">
-                                        <input type="text" class="form-control" placeholder="Name" name="name" id="name" required>
+                                        <input type="text" class="form-control" placeholder="Name" name="name" id="name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group first">
-                                        <input type="email" class="form-control" placeholder="Email" name="email" id="email" required>
+                                        <input type="text" class="form-control" placeholder="Email" name="email" id="email">
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-md-12">
                                     <div class="form-group first">
-                                        <input type="text" class="form-control" placeholder="Phone number" name="phone" id="phone" required>
+                                        <input type="text" class="form-control" placeholder="Phone number" name="phone" id="phone">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group last mb-3">
-                                        <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group last mb-3">
-                                        <input type="password" class="form-control" placeholder="Retype Password" name="re_password" id="re-password" required>
+                                        <input type="password" class="form-control" placeholder="Retype Password" name="re_password" id="re-password">
                                     </div>
                                 </div>
                             </div>

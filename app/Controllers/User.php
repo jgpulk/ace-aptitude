@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\UserModel;
 
 class User extends BaseController
 {
@@ -16,21 +17,38 @@ class User extends BaseController
     }
 
     public function register_submission(){
-        $rules = [
-            'name' => ['rules' => 'required|min_length[3]|max_length[255]'],
-            'email' => ['rules' => 'required|valid_email|is_unique[user.email]'],
-            'phone' => ['rules' => 'required|min_length[10]|max_length[20]'],
-            'password' => ['rules' => 'required|min_length[6]'],
-            're_password' => ['rules' => 'required|matches[password]'],
-        ];
-        
-        if($this->validate($rules)){
-            echo "Validation success";
-        } else{
-            echo "Validaton dailed";
-            echo "<pre>";
-            print_r($this->validator->getErrors());
-            echo "</pre>";
+        try {
+            $session = \Config\Services::session();
+            $rules = [
+                'name' => 'required|min_length[3]|max_length[255]',
+                'email' => 'required|valid_email|is_unique[users.email]',
+                'phone' => 'required|min_length[10]|max_length[20]|is_unique[users.phone]',
+                'password' => 'required|min_length[6]',
+                're_password' => 'required|matches[password]',
+            ];
+            
+            if($this->validate($rules)){
+                $userModel = new UserModel();
+                $user = array(
+                    'name' => $this->request->getPost('name'),
+                    'email' => $this->request->getPost('email'),
+                    'phone' => $this->request->getPost('phone'),
+                    'password' => $this->request->getPost('password')
+                );
+                $result = $userModel->registerUser($user);
+                if($result){
+                    $session->setFlashdata('success_message', 'Registration successful! You can now log in.');
+                    return redirect()->to('user/login');
+                } else{
+                    $session->setFlashdata('error_message', 'Registration failed!');
+                    return redirect()->to('user/register');
+                }
+            } else{
+                $data['validation_errors'] = $this->validator->getErrors();
+                return view('register', $data);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

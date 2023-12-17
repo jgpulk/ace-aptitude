@@ -65,6 +65,15 @@
             <img class="mb-4 mx-auto d-block" src="https://seeklogo.com/images/E/education-circle-logo-7FB9212F5A-seeklogo.com.png" alt="" width="100" height="100">
             <h1 class="h3 mb-3 fw-normal text-center">Please log in</h1>
 
+            <!-- Alerts -->
+            <?php if (session()->getFlashdata('success_message') !== NULL){?>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php echo session()->getFlashdata('success_message'); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php } ?>
+            <!-- End of alerts -->
+
             <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
                 <label for="floatingInput">Email address</label>
