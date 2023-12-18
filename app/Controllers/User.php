@@ -98,4 +98,13 @@ class User extends BaseController
             throw $th;
         }
     }
+
+    public function logout(){
+        try {
+            session()->destroy();
+            return redirect()->to('user/login');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
