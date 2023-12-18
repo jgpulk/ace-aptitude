@@ -72,7 +72,7 @@ class User extends BaseController
                         'user_id' => $result['userid']
                     ];
                     $session->set($userdata);
-                    return view('profile');
+                    return redirect()->to('user/profile');
                 } else{
                     $session->setFlashdata('error_message', $result['message']);
                     return redirect()->to('user/login');
@@ -80,6 +80,19 @@ class User extends BaseController
             } else{
                 $data['validation_errors'] = $this->validator->getErrors();
                 return view('login', $data);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function profile(){
+        try {
+            $isLoggedIn = session()->has('is_user_logged_in');
+            if(isset($isLoggedIn) && $isLoggedIn==1){
+                return view('profile');
+            } else{
+                return redirect()->to('user/login');
             }
         } catch (\Throwable $th) {
             throw $th;
