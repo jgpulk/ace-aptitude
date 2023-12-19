@@ -72,7 +72,7 @@ class User extends BaseController
                         'user_id' => $result['userid']
                     ];
                     $session->set($userdata);
-                    return redirect()->to('user/profile');
+                    return redirect()->to('user/account');
                 } else{
                     $session->setFlashdata('error_message', $result['message']);
                     return redirect()->to('user/login');
