@@ -60,22 +60,22 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
-                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="Valerie" />
+                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="" />
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
-                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="+919*4*8*3**9" disabled/>
+                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="" disabled/>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
-                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="jg****@gmail.com" disabled/>
+                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="" disabled/>
                                                 </div>
 
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="dob">Birthday</label>
-                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="1999-01-28" />
+                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="" />
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="gender">Gender</label>
