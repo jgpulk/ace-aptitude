@@ -18183,8 +18183,15 @@ body {
   border-color: rgba(0, 0, 0, 0);
 }
 .nav-fixed #layoutSidenav #layoutSidenav_content {
-  padding-left: 15rem;
+  /* padding-left: 15rem; */
   top: 3.625rem;
+}
+
+@media (max-width: 992px) {
+  .nav-fixed #layoutSidenav #layoutSidenav_content {
+    padding-left: 15rem;
+    top: 3.625rem;
+  }
 }
 
 .layout-rtl #layoutSidenav #layoutSidenav_nav {
@@ -19617,4 +19624,8 @@ pre[class*=language-] {
 
 .token.variable {
   color: #ff6666;
+}
+
+.required{
+  color: red;
 }
