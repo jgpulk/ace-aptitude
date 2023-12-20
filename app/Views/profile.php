@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | Ace Aptitude</title>
+    <title>My Account | Ace Aptitude</title>
     <link rel="icon" type="image/x-icon" href="https://seeklogo.com/images/E/education-circle-logo-7FB9212F5A-seeklogo.com.png" />
     <link rel="stylesheet" href="<?php echo base_url('css/sb-admin-pro/styles.css'); ?>">
     <script data-search-pseudo-elements="" defer="" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js" crossorigin="anonymous"></script>
@@ -30,71 +30,76 @@
                     </div>
                 </header>
 
-                <!-- Main page content-->
                 <div class="container-xl px-4 mt-4">
-                    <!-- Account page navigation-->
-                    <nav class="nav nav-borders">
-                        <a class="nav-link active ms-0" href="<?php echo base_url('user/account') ?>">Profile</a>
-                        <a class="nav-link" href="#security">Security</a>
-                        <a class="nav-link" href="#notification">Notifications</a>
+                    <nav class="nav nav-tabs card-header-tabs">
+                        <a class="nav-link active" id="profile-tab" href="#profile" data-bs-toggle="tab" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
+                        <a class="nav-link" id="security-tab" href="#security" data-bs-toggle="tab" role="tab" aria-controls="security" aria-selected="false">Security</a>
+                        <a class="nav-link" id="notification-tab" href="#notification" data-bs-toggle="tab" role="tab" aria-controls="notification" aria-selected="false">Notifications</a>
                     </nav>
+
                     <hr class="mt-0 mb-4" />
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <!-- Profile picture card-->
-                            <div class="card mb-4 mb-xl-0">
-                                <div class="card-header">Profile Picture</div>
-                                <div class="card-body text-center">
-                                    <img class="img-account-profile rounded-circle mb-2" src="https://sb-admin-pro.startbootstrap.com/assets/img/illustrations/profiles/profile-1.png" alt="" />
-                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                    <button class="btn btn-primary" type="button">Upload new image</button>
+                    
+                    <div class="tab-content" id="cardTabContent">
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-xl-4">
+                                    <div class="card mb-4 mb-xl-0">
+                                        <div class="card-header">Profile Picture</div>
+                                        <div class="card-body text-center">
+                                            <img class="img-account-profile rounded-circle mb-2" src="https://sb-admin-pro.startbootstrap.com/assets/img/illustrations/profiles/profile-1.png" alt="" />
+                                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                            <button class="btn btn-primary" type="button">Upload new image</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-8">
+                                    <div class="card mb-4">
+                                        <div class="card-header">Account Details</div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="row gx-3 mb-3">
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
+                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="Valerie" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
+                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="+919*4*8*3**9" disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
+                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="jg****@gmail.com" disabled/>
+                                                </div>
+
+                                                <div class="row gx-3 mb-3">
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="dob">Birthday</label>
+                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="1999-01-28" />
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="small mb-1" for="gender">Gender</label>
+                                                        <select class="form-control" id="gender" name="gender">
+                                                            <option value="">Select gender</option>
+                                                            <option value="female">Female</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="other">Other</option>
+                                                            <option value="-1">Rather not to say</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-primary" type="button">Save changes</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-8">
-                            <!-- Account details card-->
-                            <div class="card mb-4">
-                                <div class="card-header">Account Details</div>
-                                <div class="card-body">
-                                    <form>
-                                        <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
-                                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="Valerie" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
-                                                <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="+919*4*8*3**9" disabled/>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
-                                            <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="jg****@gmail.com" disabled/>
-                                        </div>
-
-                                        <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="dob">Birthday</label>
-                                                <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="1999-01-28" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="gender">Gender</label>
-                                                <select class="form-control" id="gender" name="gender">
-                                                    <option value="">Select gender</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="other">Other</option>
-                                                    <option value="-1">Rather not to say</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Are you enrolled on college/School -> Yes or No picker -> if yes get collge details other wise job details -->
-                                        <!-- Save changes button-->
-                                        <button class="btn btn-primary" type="button">Save changes</button>
-                                    </form>
-                                </div>
-                            </div>
+                        <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                            <h5 class="card-title">Security Settings</h5>
+                        </div>
+                        <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
+                            <h5 class="card-title">Notifications Settings</h5>
                         </div>
                     </div>
                 </div>
