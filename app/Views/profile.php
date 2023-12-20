@@ -131,7 +131,42 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
-                            <h5 class="card-title">Notifications Settings</h5>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card card-header-actions mb-4">
+                                        <div class="card-header">
+                                            Notification Preferences
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" id="flexSwitchCheckChecked" type="checkbox" checked="" />
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" for="inputNotificationEmail">Your email</label>
+                                                    <input class="form-control" id="inputNotificationEmail" type="email" value="name@example.com" disabled="" />
+                                                </div>
+                                                <div class="mb-0">
+                                                    <label class="small mb-2">Choose which types of email updates you receive</label>
+                                                    <div class="form-check mb-2">
+                                                        <input class="form-check-input" id="checkPromotional" type="checkbox" />
+                                                        <label class="form-check-label" for="checkPromotional">Marketing and promotional offers</label>
+                                                    </div>
+                                                    <div class="form-check mb-2">
+                                                        <input class="form-check-input" id="checkProductUpdates" type="checkbox" checked="" />
+                                                        <label class="form-check-label" for="checkProductUpdates">Updates for the services you've purchased</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" id="checkSecurity" type="checkbox" checked="" disabled="" />
+                                                        <label class="form-check-label" for="checkSecurity">Security alerts</label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
