@@ -138,8 +138,22 @@
                                         <div class="card-header">
                                             Notification Preferences
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" id="flexSwitchCheckChecked" type="checkbox" checked="" />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                                <input class="form-check-input" id="notificationStatus" type="checkbox" checked="" />
+                                                <label class="form-check-label" for="notificationStatus"></label>
+                                            </div>
+                                            <div class="modal fade" id="notificationStatsConfirmation" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="notificationStatsConfirmationLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="notificationStatsConfirmationLabel">Notification Preferences</h5>
+                                                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">Are you sure. By turning off this will not send any notifications including security and new feature updates</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="cancel">Close</button>
+                                                            <button class="btn btn-primary" id="understood" type="button">Understood</button></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -148,7 +162,7 @@
                                                     <label class="small mb-1" for="inputNotificationEmail">Your email</label>
                                                     <input class="form-control" id="inputNotificationEmail" type="email" value="name@example.com" disabled="" />
                                                 </div>
-                                                <div class="mb-0">
+                                                <div class="mb-0" id="notificationChecklist">
                                                     <label class="small mb-2">Choose which types of email updates you receive</label>
                                                     <div class="form-check mb-2">
                                                         <input class="form-check-input" id="checkPromotional" type="checkbox" />
@@ -179,6 +193,41 @@
     <script data-cfasync="false" src="<?php echo base_url('js/sb-admin-pro/email-decode.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="<?php echo base_url('js/sb-admin-pro/scripts.js') ?>"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#notificationStatus').click(function() {
+                if ($(this).prop('checked')) {
+                    $('#checkSecurity').prop('disabled', true)
+                    $('#checkSecurity').prop('checked', true)
+                } else {
+                    $('#notificationStatsConfirmation').modal('show')
+                }
+            })
+
+            $('#understood').click(function() {
+                $('#notificationChecklist input[type="checkbox"]').prop('checked', false)
+                $('#notificationChecklist input[type="checkbox"]').prop('disabled', false)
+                $('#notificationStatsConfirmation').modal('hide')
+            })
+
+            $('#cancel').click(function() {
+                $('#notificationStatus').prop('checked', true)
+            })
+
+            $('#notificationChecklist input[type="checkbox"]').change(function() {
+                var securityAlertsSelected = $('#checkSecurity').prop('checked')
+                if (securityAlertsSelected) {
+                    $('#checkSecurity').prop('disabled', true)
+                } else {
+                    $('#checkSecurity').prop('disabled', false)
+                }
+                var anyCheckboxSelected = $('#notificationChecklist input[type="checkbox"]:checked').length > 0
+                $('#notificationStatus').prop('checked', anyCheckboxSelected)
+            })
+
+        })
+    </script>
     
     <!-- SB Customizer -->
     <!-- <script src="https://assets.startbootstrap.com/js/sb-customizer.js"></script>
