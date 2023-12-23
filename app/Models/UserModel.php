@@ -29,4 +29,12 @@ class UserModel extends Model
         }
         return ['status'=> true, 'userid'=> $user['id']];
     }
+
+    public function getProfileData($userid){
+        $user = $this->select('id, name, email, phone, dob, gender')->where('id', $userid)->first();
+        if(!$user){
+            return ['status'=> false, 'message'=> 'No user found'];
+        }
+        return ['status'=> true, 'user'=> $user];
+    }
 }

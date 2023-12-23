@@ -69,7 +69,7 @@ class User extends BaseController
                 if($result['status']){
                     $userdata = [
                         'is_user_logged_in' => 1,
-                        'user_id' => $result['userid']
+                        'userid' => $result['userid']
                     ];
                     $session->set($userdata);
                     return redirect()->to('user/account');
@@ -89,8 +89,17 @@ class User extends BaseController
     public function profile(){
         try {
             $isLoggedIn = session()->has('is_user_logged_in');
-            if(isset($isLoggedIn) && $isLoggedIn==1){
-                return view('profile');
+            if(isset($isLoggedIn) && $isLoggedIn){
+                $userid = session()->get('userid');
+                $userModel = new UserModel();
+                $result = $userModel->getProfileData($userid);
+                if($result['status']){
+                    $data['profile'] = $result['user'];
+                } else{
+                    session()->setFlashdata('error_message', $result['message']);
+                    return redirect()->to('user/login');
+                }
+                return view('profile', $data);
             } else{
                 return redirect()->to('user/login');
             }

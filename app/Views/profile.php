@@ -61,31 +61,30 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
-                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="" />
+                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="<?php echo $profile['name'] ?>" />
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
-                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="" disabled/>
+                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="<?php echo $profile['phone'] ?>" disabled/>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
-                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="" disabled/>
+                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="<?php echo $profile['email'] ?>" disabled/>
                                                 </div>
 
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="dob">Birthday</label>
-                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="" />
+                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="<?php echo $profile['dob'] ?>" />
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="gender">Gender</label>
                                                         <select class="form-control" id="gender" name="gender">
                                                             <option value="">Select gender</option>
-                                                            <option value="female">Female</option>
-                                                            <option value="male">Male</option>
-                                                            <option value="other">Other</option>
-                                                            <option value="-1">Rather not to say</option>
+                                                            <option value="female" <?php echo ($profile['gender']=='female')?'selected':''; ?>>Female</option>
+                                                            <option value="male" <?php echo ($profile['gender']=='male')?'selected':''; ?>>Male</option>
+                                                            <option value="other" <?php echo ($profile['gender']=='other')?'selected':''; ?>>Other</option>
                                                         </select>
                                                     </div>
                                                 </div>
