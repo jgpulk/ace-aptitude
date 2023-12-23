@@ -23,7 +23,7 @@ class User extends BaseController
                 'name' => 'required|min_length[3]|max_length[255]',
                 'email' => 'required|valid_email|is_unique[users.email]',
                 'phone' => 'required|min_length[10]|max_length[20]|is_unique[users.phone]',
-                'password' => 'required|min_length[6]',
+                'password' => 'required|min_length[6]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/]',
                 're_password' => 'required|matches[password]',
             ];
             
