@@ -18,3 +18,4 @@ $routes->get('/user/logout', 'User::logout');
 // Test Routes
 $routes->get('/test', 'Test::index');
 $routes->get('/test/get-session', 'Test::getSession');
+$routes->get('/test/close-session', 'Test::destroySession');
