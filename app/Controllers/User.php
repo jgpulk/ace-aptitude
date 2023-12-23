@@ -33,7 +33,7 @@ class User extends BaseController
                     'name' => $this->request->getPost('name'),
                     'email' => $this->request->getPost('email'),
                     'phone' => $this->request->getPost('phone'),
-                    'password' => $this->request->getPost('password')
+                    'password' => md5($this->request->getPost('password'))
                 );
                 $result = $userModel->registerUser($user);
                 if($result){

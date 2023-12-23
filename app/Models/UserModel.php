@@ -24,7 +24,7 @@ class UserModel extends Model
         if(!$user){
             return ['status'=> false, 'message'=> 'No user found'];
         }
-        if($user['password'] != $data['password']){
+        if($user['password'] != md5($data['password'])){
             return ['status'=> false, 'message'=> 'Incorrect password/email'];
         }
         return ['status'=> true, 'userid'=> $user['id']];
