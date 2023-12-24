@@ -37,4 +37,11 @@ class UserModel extends Model
         }
         return ['status'=> true, 'user'=> $user];
     }
+
+    public function updateProfileData($userid, $data){
+        $this->set($data)
+            ->where($this->primaryKey, $userid)
+            ->update();
+        return true;
+    }
 }
