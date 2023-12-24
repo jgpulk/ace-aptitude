@@ -57,7 +57,7 @@
                                     <div class="card mb-4">
                                         <div class="card-header">Account Details</div>
                                         <div class="card-body">
-                                            <form>
+                                            <form action="<?php echo base_url('user/update-profile') ?>" method="post">
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
@@ -65,12 +65,12 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
-                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="<?php echo $profile['phone'] ?>" disabled/>
+                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="<?php echo $profile['phone'] ?>" readonly/>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
-                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="<?php echo $profile['email'] ?>" disabled/>
+                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="<?php echo $profile['email'] ?>" readonly/>
                                                 </div>
 
                                                 <div class="row gx-3 mb-3">
@@ -88,7 +88,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-primary" type="button">Save changes</button>
+                                                <button class="btn btn-primary" type="submit">Save changes</button>
                                             </form>
                                         </div>
                                     </div>
@@ -189,12 +189,40 @@
         </div>
     </div>
 
+    <div class="toast-container p-3 top-0 end-0" id="toastPlacement">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-white">
+                <i data-feather="alert-circle"></i>
+                <strong class="mr-auto toast-heading"><!-- Toast heading here --></strong>
+                <button class="ml-2 mb-1 btn-close btn-close-white" type="button" data-bs-dismiss="toast" aria-label="Close">                                                            </button>
+            </div>
+            <div class="toast-body"><!-- Toast message here --></div>
+        </div>
+    </div>
+
     <script data-cfasync="false" src="<?php echo base_url('js/sb-admin-pro/email-decode.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="<?php echo base_url('js/sb-admin-pro/scripts.js') ?>"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            let success_message = "<?php echo session()->getFlashdata('success_message')?>"
+            let error_message = "<?php echo session()->getFlashdata('error_message')?>"
+            if (success_message || error_message) {
+                if(success_message){
+                    $('.toast-header').removeClass('bg-danger')
+                    $('.toast-header').addClass('bg-success')
+                    $('.toast-heading').text('Success')
+                    $('.toast-body').text(success_message)
+                } else{
+                    $('.toast-header').removeClass('bg-success')
+                    $('.toast-header').addClass('bg-danger')
+                    $('.toast-heading').text('Oops')
+                    $('.toast-body').text(error_message)
+                }
+                $('.toast').toast('show')
+            }
+
             $('#notificationStatus').click(function() {
                 if ($(this).prop('checked')) {
                     $('#checkSecurity').prop('disabled', true)

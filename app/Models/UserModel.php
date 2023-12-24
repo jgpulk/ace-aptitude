@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'email', 'phone', 'password'];
+    protected $allowedFields    = ['name', 'email', 'phone', 'password', 'dob', 'gender'];
 
     public function registerUser($data){
         $this->insert($data);

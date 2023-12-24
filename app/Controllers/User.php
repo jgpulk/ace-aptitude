@@ -7,6 +7,13 @@ use App\Models\UserModel;
 
 class User extends BaseController
 {
+    protected $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+    }
+
     public function index()
     {
         return view('login');
@@ -100,6 +107,43 @@ class User extends BaseController
                     return redirect()->to('user/login');
                 }
                 return view('profile', $data);
+            } else{
+                return redirect()->to('user/login');
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function update_profile(){
+        try {
+            $isLoggedIn = $this->session->has('is_user_logged_in');
+            if(isset($isLoggedIn) && $isLoggedIn){
+                $userid = $this->session->get('userid');
+                $this->validation->setRules([
+                    'name' => 'required',
+                    'dob' => 'permit_empty|valid_date|not_future_date',
+                    'gender' => 'permit_empty|in_list[male,female,other]'
+                ],[
+                    'dob' => [
+                        'not_future_date' => 'The {field} must be a date not in the future.'
+                    ]
+                ]);
+                if ($this->validation->withRequest($this->request)->run()) {
+                    $validatedData = $this->validation->getValidated();
+                    $result = $this->userModel->updateProfileData($userid, $validatedData);
+                    if($result == true){
+                        $this->session->setFlashdata('success_message', 'Profile updated successfully!');
+                    } else{
+                        $this->session->setFlashdata('error_message', 'Please try again. Some thing went wrong!');
+                    }
+                    return redirect()->to('user/account');
+                } else{
+                    print_r($this->validation->getErrors());
+                    // $this->session->setFlashdata('error_message', 'Server side validation error caught');
+                    // return redirect()->back()->withInput()->with('validation', $this->validation);
+                    // return view('profile');
+                }
             } else{
                 return redirect()->to('user/login');
             }
