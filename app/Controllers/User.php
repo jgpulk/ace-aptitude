@@ -121,16 +121,16 @@ class User extends BaseController
             if(isset($isLoggedIn) && $isLoggedIn){
                 $userid = $this->session->get('userid');
                 $this->validation->setRules([
-                    'name' => 'required',
+                    'name' => 'required|alpha_space',
                     'dob' => 'permit_empty|valid_date|not_future_date',
-                    'gender' => 'permit_empty|in_list[male,female,other]'
+                    'gender' => 'permit_empty|alpha|in_list[male,female,other]'
                 ],[
                     'dob' => [
                         'not_future_date' => 'The {field} must be a date not in the future.'
                     ]
                 ]);
                 if ($this->validation->withRequest($this->request)->run()) {
-                    $validatedData = $this->validation->getValidated();
+                    $validatedData = esc($this->validation->getValidated());
                     $result = $this->userModel->updateProfileData($userid, $validatedData);
                     if($result == true){
                         $this->session->setFlashdata('success_message', 'Profile updated successfully!');
@@ -139,10 +139,9 @@ class User extends BaseController
                     }
                     return redirect()->to('user/account');
                 } else{
-                    print_r($this->validation->getErrors());
-                    // $this->session->setFlashdata('error_message', 'Server side validation error caught');
-                    // return redirect()->back()->withInput()->with('validation', $this->validation);
-                    // return view('profile');
+                    // print_r($this->validation->getErrors());
+                    $this->session->setFlashdata('error_message', 'Validation failed!');
+                    return view('profile', ['validation' => $this->validation, 'prev_data' => $this->request->getPost()]);
                 }
             } else{
                 return redirect()->to('user/login');

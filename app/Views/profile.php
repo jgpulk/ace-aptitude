@@ -61,31 +61,34 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
-                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="<?php echo $profile['name'] ?>" />
+                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="<?php echo (isset($validation)?$prev_data['name']:$profile['name']) ?>" />
+                                                        <span class="error-message"><?= isset($validation) ? $validation->getError('name') : '' ?></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
-                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="<?php echo $profile['phone'] ?>" readonly/>
+                                                        <input class="form-control" id="mobile" name="mobile" type="tel" placeholder="Enter your mobile" value="<?php echo (isset($validation)?$prev_data['mobile']:$profile['phone']) ?>" readonly/>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="email">Email address</label><span class="required"> *</span>
-                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="<?php echo $profile['email'] ?>" readonly/>
+                                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your email address" value="<?php echo (isset($validation)?$prev_data['email']:$profile['email']) ?>" readonly/>
                                                 </div>
 
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="dob">Birthday</label>
-                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="<?php echo $profile['dob'] ?>" />
+                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="<?php echo (isset($validation)?$prev_data['dob']:$profile['dob']) ?>" />
+                                                        <span class="error-message"><?php echo isset($validation) ? $validation->getError('dob') : '' ?></span>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="gender">Gender</label>
                                                         <select class="form-control" id="gender" name="gender">
                                                             <option value="">Select gender</option>
-                                                            <option value="female" <?php echo ($profile['gender']=='female')?'selected':''; ?>>Female</option>
-                                                            <option value="male" <?php echo ($profile['gender']=='male')?'selected':''; ?>>Male</option>
-                                                            <option value="other" <?php echo ($profile['gender']=='other')?'selected':''; ?>>Other</option>
+                                                            <option value="female" <?php echo isset($validation)?(($prev_data['gender']=='female')?'selected':''):(($profile['gender']=='female')?'selected':''); ?>>Female</option>
+                                                            <option value="male" <?php echo isset($validation)?(($prev_data['gender']=='male')?'selected':''):(($profile['gender']=='male')?'selected':''); ?>>Male</option>
+                                                            <option value="other" <?php echo isset($validation)?(($prev_data['gender']=='other')?'selected':''):(($profile['gender']=='other')?'selected':''); ?>>Other</option>
                                                         </select>
+                                                        <span class="error-message"><?= isset($validation) ? $validation->getError('gender') : '' ?></span>
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary" type="submit">Save changes</button>
