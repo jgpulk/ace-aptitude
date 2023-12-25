@@ -61,8 +61,10 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="name">Name</label><span class="required"> *</span>
-                                                        <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name" value="<?php echo (isset($validation)?$prev_data['name']:$profile['name']) ?>" />
-                                                        <span class="error-message"><?= isset($validation) ? $validation->getError('name') : '' ?></span>
+                                                        <input class="form-control <?php echo (isset($validation) && $validation->hasError('name'))?'is-invalid':'' ?>" id="name" name="name" type="text" placeholder="Enter your name" value="<?php echo (isset($validation)?$prev_data['name']:$profile['name']) ?>" />
+                                                        <div id="nameFeedback" class="invalid-feedback">
+                                                            <?= isset($validation) ? $validation->getError('name') : '' ?>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="mobile">Mobile</label><span class="required"> *</span>
@@ -77,18 +79,22 @@
                                                 <div class="row gx-3 mb-3">
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="dob">Birthday</label>
-                                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="<?php echo (isset($validation)?$prev_data['dob']:$profile['dob']) ?>" />
-                                                        <span class="error-message"><?php echo isset($validation) ? $validation->getError('dob') : '' ?></span>
+                                                        <input class="form-control <?php echo (isset($validation) && $validation->hasError('dob'))?'is-invalid':'' ?>" id="dob" name="dob" type="date" placeholder="Enter your birthday" value="<?php echo (isset($validation)?$prev_data['dob']:$profile['dob']) ?>" />
+                                                        <div id="dobFeedback" class="invalid-feedback">
+                                                            <?= isset($validation) ? $validation->getError('dob') : '' ?>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="small mb-1" for="gender">Gender</label>
-                                                        <select class="form-control" id="gender" name="gender">
+                                                        <select class="form-control <?php echo (isset($validation) && $validation->hasError('gender'))?'is-invalid':'' ?>" id="gender" name="gender">
                                                             <option value="">Select gender</option>
                                                             <option value="female" <?php echo isset($validation)?(($prev_data['gender']=='female')?'selected':''):(($profile['gender']=='female')?'selected':''); ?>>Female</option>
                                                             <option value="male" <?php echo isset($validation)?(($prev_data['gender']=='male')?'selected':''):(($profile['gender']=='male')?'selected':''); ?>>Male</option>
                                                             <option value="other" <?php echo isset($validation)?(($prev_data['gender']=='other')?'selected':''):(($profile['gender']=='other')?'selected':''); ?>>Other</option>
                                                         </select>
-                                                        <span class="error-message"><?= isset($validation) ? $validation->getError('gender') : '' ?></span>
+                                                        <div id="genderFeedback" class="invalid-feedback">
+                                                            <?= isset($validation) ? $validation->getError('gender') : '' ?>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary" type="submit">Save changes</button>
@@ -256,6 +262,9 @@
                 $('#notificationStatus').prop('checked', anyCheckboxSelected)
             })
 
+            $('.form-control').on('input', function() {
+                $(this).removeClass('is-invalid')
+            })
         })
     </script>
     
