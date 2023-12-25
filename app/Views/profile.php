@@ -216,6 +216,17 @@
         $(document).ready(function() {
             let success_message = "<?php echo session()->getFlashdata('success_message')?>"
             let error_message = "<?php echo session()->getFlashdata('error_message')?>"
+
+            let hash = window.location.hash
+            if(hash){
+                if (hash && $(hash+"-tab").length > 0){
+                    $('.nav-link').removeClass('active')
+                    $(hash+"-tab").addClass('active')
+                    $('.tab-pane').removeClass('show active')
+                    $(hash).addClass('show active')
+                }
+            }
+
             if (success_message || error_message) {
                 if(success_message){
                     $('.toast-header').removeClass('bg-danger')
