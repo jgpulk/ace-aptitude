@@ -14,6 +14,7 @@ $routes->get('/user/register', 'User::register');
 $routes->post('/user/register', 'User::register_submission');
 $routes->get('/user/account', 'User::profile');
 $routes->post('/user/update-profile', 'User::update_profile');
+$routes->post('/user/change-password', 'User::update_security');
 $routes->get('/user/logout', 'User::logout');
 
 // Test Routes

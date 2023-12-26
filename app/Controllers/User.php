@@ -99,7 +99,7 @@ class User extends BaseController
             if(isset($isLoggedIn) && $isLoggedIn){
                 $userid = session()->get('userid');
                 $userModel = new UserModel();
-                $result = $userModel->getProfileData($userid);
+                $result = $userModel->getProfileData($userid, 'id, name, email, phone, dob, gender');
                 if($result['status']){
                     $data['profile'] = $result['user'];
                 } else{
@@ -151,10 +151,69 @@ class User extends BaseController
         }
     }
 
+    public function update_security(){
+        try {
+            $isLoggedIn = session()->has('is_user_logged_in');
+            if(isset($isLoggedIn) && $isLoggedIn){
+                $userid = session()->get('userid');
+                $this->validation->setRules([
+                    'current_password' => 'required',
+                    'new_password' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/]',
+                    'confirm_password' => 'required|matches[new_password]'
+                ]);
+                if ($this->validation->withRequest($this->request)->run()) {
+                    $userModel = new UserModel();
+                    $user = $userModel->getUserDetails($userid, 'password');
+                    if($user){
+                        if($user['password'] == md5($this->request->getPost('current_password'))){
+                            if($user['password'] != md5($this->request->getPost('new_password'))){
+                                $data = array(
+                                    'password' => md5($this->request->getPost('new_password'))
+                                );
+                                $result = $userModel->updatePassword($userid, $data);
+                                if($result){
+                                    $response = ['status' => true, 'message' => 'Password updated successfully'];
+                                    echo json_encode($response);
+                                } else{
+                                    $response = ['status' => false, 'message' => 'Something went wrong'];
+                                }
+                            } else{
+                                $response = ['status' => false, 'message' => 'Current password and new password cannot be the same.'];
+                                echo json_encode($response);
+                            }
+                        } else{
+                            $response = ['status' => false, 'message' => 'The password that is currently in use is incorrect.'];
+                            echo json_encode($response);
+                        }
+                    } else{
+                        $response = ['status' => false, 'message' => 'No user found'];
+                        echo json_encode($response);
+                    }
+                } else{
+                    $response = ['status' => false, 'errors' => $this->validation->getErrors(), 'message' => 'Server validation failed'];
+                    return $this->response->setStatusCode(403)->setJSON($response);
+                }
+            } else{
+                $response = ['status' => false, 'message' => 'User has not logged in. Please log in.'];
+                return $this->response->setStatusCode(401)->setJSON($response);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function logout(){
         try {
             session()->destroy();
             return redirect()->to('user/login');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function destroy_session(){
+        try {
+            session()->destroy();
         } catch (\Throwable $th) {
             throw $th;
         }

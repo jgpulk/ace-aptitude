@@ -44,4 +44,16 @@ class UserModel extends Model
             ->update();
         return true;
     }
+
+    public function getUserDetails($userid, $select){
+        $user = $this->select($select)->where('id', $userid)->first();
+        return $user;
+    }
+
+    public function updatePassword($userid, $data){
+        $this->set($data)
+            ->where($this->primaryKey, $userid)
+            ->update();
+        return true;
+    }
 }

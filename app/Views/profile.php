@@ -108,21 +108,21 @@
                                 <div class="col-lg-8">
                                     <div class="card mb-4">
                                         <div class="card-header">Change Password</div>
-                                        <div class="card-body">
-                                            <form>
+                                        <div class="card-body" id="passwordChange">
+                                            <form action="#">
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="currentPassword">Current Password</label>
-                                                    <input class="form-control" id="currentPassword" type="password" placeholder="Enter current password" />
+                                                    <input class="form-control" name="current_password" id="currentPassword" type="password" placeholder="Enter current password" />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="newPassword">New Password</label>
-                                                    <input class="form-control" id="newPassword" type="password" placeholder="Enter new password" />
+                                                    <input class="form-control" name="new_password" id="newPassword" type="password" placeholder="Enter new password" />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="confirmPassword">Confirm Password</label>
-                                                    <input class="form-control" id="confirmPassword" type="password" placeholder="Confirm new password" />
+                                                    <input class="form-control" name="confirm_password" id="confirmPassword" type="password" placeholder="Confirm new password" />
                                                 </div>
-                                                <button class="btn btn-primary" type="button">Save</button>
+                                                <button class="btn btn-primary" id="changePassword" type="submit" disabled>Save</button>
                                             </form>
                                         </div>
                                     </div>
@@ -274,6 +274,40 @@
 
             $('.form-control').on('input', function() {
                 $(this).removeClass('is-invalid')
+            })
+
+            $('#currentPassword, #newPassword, #confirmPassword').on('input', function () {
+                let currentPassword = $('#currentPassword').val();
+                let newPassword = $('#newPassword').val();
+                let confirmPassword = $('#confirmPassword').val();
+                $('#changePassword').prop('disabled', !(currentPassword && newPassword && confirmPassword));
+            });
+
+            $('#changePassword').click(function(e){
+                e.preventDefault(e);
+                let data = {
+                    current_password: $('#currentPassword').val(),
+                    new_password: $('#newPassword').val(),
+                    confirm_password: $('#confirmPassword').val()
+                }
+                $.ajax({
+                    url: '<?= site_url('user/change-password'); ?>',
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (response, textStatus, xhr) {
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        if(xhr.status == 401){
+                            window.location.href = "<?php echo site_url('user/login')?>"
+                        } else{
+                            console.log(error);
+                            console.error(xhr.responseText);
+                            console.log(xhr.status);
+                        }
+                    }
+                });
             })
         })
     </script>
