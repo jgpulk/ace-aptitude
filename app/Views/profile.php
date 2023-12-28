@@ -297,6 +297,7 @@
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
                         console.log(response);
+                        return
                     },
                     error: function (xhr, status, error) {
                         if(xhr.status == 401){

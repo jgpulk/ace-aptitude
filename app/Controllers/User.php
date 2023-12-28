@@ -173,21 +173,24 @@ class User extends BaseController
                                 $result = $userModel->updatePassword($userid, $data);
                                 if($result){
                                     $response = ['status' => true, 'message' => 'Password updated successfully'];
-                                    echo json_encode($response);
+                                    return $this->response->setStatusCode(200)->setJSON($response);
+
                                 } else{
                                     $response = ['status' => false, 'message' => 'Something went wrong'];
+                                    return $this->response->setStatusCode(500)->setJSON($response);
+                                    
                                 }
                             } else{
                                 $response = ['status' => false, 'message' => 'Current password and new password cannot be the same.'];
-                                echo json_encode($response);
+                                return $this->response->setStatusCode(422)->setJSON($response);
                             }
                         } else{
                             $response = ['status' => false, 'message' => 'The password that is currently in use is incorrect.'];
-                            echo json_encode($response);
+                            return $this->response->setStatusCode(422)->setJSON($response);
                         }
                     } else{
                         $response = ['status' => false, 'message' => 'No user found'];
-                        echo json_encode($response);
+                        return $this->response->setStatusCode(400)->setJSON($response);
                     }
                 } else{
                     $response = ['status' => false, 'errors' => $this->validation->getErrors(), 'message' => 'Server validation failed'];
