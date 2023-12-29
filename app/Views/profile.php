@@ -296,16 +296,28 @@
                     data: data,
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
+                        let successResponse = JSON.parse(response.responseText)
                         console.log(response);
-                        return
+                        console.log(textStatus);
+                        console.log(xhr);
+                        $('.toast-header').removeClass('bg-danger').addClass('bg-success')
+                        $('.toast-heading').text('Success')
+                        $('.toast-body').text(successResponse.message)
+                        $('.toast').toast('show')
                     },
                     error: function (xhr, status, error) {
-                        if(xhr.status == 401){
+                        console.log("@error block");
+                        if(xhr.status == 404){
                             window.location.href = "<?php echo site_url('user/login')?>"
                         } else{
+                            let errorResponse = JSON.parse(xhr.responseText)
                             console.log(error);
                             console.error(xhr.responseText);
                             console.log(xhr.status);
+                            $('.toast-header').removeClass('bg-success').addClass('bg-danger')
+                            $('.toast-heading').text('Oops')
+                            $('.toast-body').text(errorResponse.message)
+                            $('.toast').toast('show')
                         }
                     }
                 });
