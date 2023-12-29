@@ -12,10 +12,16 @@ class Test extends BaseController
     }
 
     public function getSession(){
-        $session = \Config\Services::session();
-        $activeSessions = $session->get();
         echo "Active Sessions:<pre>";
-        print_r($activeSessions);
+        print_r(session()->get());
+        echo "</pre>";
+    }
+
+    public function destroySession(){
+        session()->destroy();
+        echo "Session destroyed. Current session data<br>";
+        echo "<pre>";
+        print_r(session()->get());
         echo "</pre>";
     }
 }

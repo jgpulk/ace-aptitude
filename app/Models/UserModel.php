@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'email', 'phone', 'password'];
+    protected $allowedFields    = ['name', 'email', 'phone', 'password', 'dob', 'gender'];
 
     public function registerUser($data){
         $this->insert($data);
@@ -24,9 +24,36 @@ class UserModel extends Model
         if(!$user){
             return ['status'=> false, 'message'=> 'No user found'];
         }
-        if($user['password'] != $data['password']){
+        if($user['password'] != md5($data['password'])){
             return ['status'=> false, 'message'=> 'Incorrect password/email'];
         }
         return ['status'=> true, 'userid'=> $user['id']];
+    }
+
+    public function getProfileData($userid){
+        $user = $this->select('id, name, email, phone, dob, gender')->where('id', $userid)->first();
+        if(!$user){
+            return ['status'=> false, 'message'=> 'No user found'];
+        }
+        return ['status'=> true, 'user'=> $user];
+    }
+
+    public function updateProfileData($userid, $data){
+        $this->set($data)
+            ->where($this->primaryKey, $userid)
+            ->update();
+        return true;
+    }
+
+    public function getUserDetails($userid, $select){
+        $user = $this->select($select)->where('id', $userid)->first();
+        return $user;
+    }
+
+    public function updatePassword($userid, $data){
+        $this->set($data)
+            ->where($this->primaryKey, $userid)
+            ->update();
+        return true;
     }
 }
