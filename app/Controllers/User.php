@@ -189,7 +189,7 @@ class User extends BaseController
                             return $this->response->setStatusCode(422)->setJSON($response);
                         }
                     } else{
-                        // Unset the session here
+                        session()->destroy();
                         $response = ['status' => false, 'message' => 'No user found'];
                         return $this->response->setStatusCode(404)->setJSON($response);
                     }
