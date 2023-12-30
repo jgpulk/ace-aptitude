@@ -113,14 +113,17 @@
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="currentPassword">Current Password</label>
                                                     <input class="form-control" name="current_password" id="currentPassword" type="password" placeholder="Enter current password" />
+                                                    <div id="currentPasswordFeedback" class="invalid-feedback"></div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="newPassword">New Password</label>
                                                     <input class="form-control" name="new_password" id="newPassword" type="password" placeholder="Enter new password" />
+                                                    <div id="newPasswordFeedback" class="invalid-feedback"></div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="confirmPassword">Confirm Password</label>
                                                     <input class="form-control" name="confirm_password" id="confirmPassword" type="password" placeholder="Confirm new password" />
+                                                    <div id="confirmPasswordFeedback" class="invalid-feedback"></div>
                                                 </div>
                                                 <button class="btn btn-primary" id="changePassword" type="submit" disabled>Save</button>
                                             </form>
@@ -297,23 +300,22 @@
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
                         let successResponse = JSON.parse(response.responseText)
-                        console.log(response);
-                        console.log(textStatus);
-                        console.log(xhr);
                         $('.toast-header').removeClass('bg-danger').addClass('bg-success')
                         $('.toast-heading').text('Success')
                         $('.toast-body').text(successResponse.message)
                         $('.toast').toast('show')
                     },
                     error: function (xhr, status, error) {
-                        console.log("@error block");
                         if(xhr.status == 404){
                             window.location.href = "<?php echo site_url('user/login')?>"
-                        } else{
+                        } else if(xhr.status == 403){
                             let errorResponse = JSON.parse(xhr.responseText)
-                            console.log(error);
-                            console.error(xhr.responseText);
-                            console.log(xhr.status);
+                            $.each(errorResponse.errors, function(field, message) {
+                                $('[name="' + field + '"]').addClass('is-invalid');
+                                $('[name="' + field + '"]').next('div').text(message)
+                            });
+                        }else{
+                            let errorResponse = JSON.parse(xhr.responseText)
                             $('.toast-header').removeClass('bg-success').addClass('bg-danger')
                             $('.toast-heading').text('Oops')
                             $('.toast-body').text(errorResponse.message)
