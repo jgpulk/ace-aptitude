@@ -17,6 +17,9 @@ $routes->post('/user/update-profile', 'User::update_profile');
 $routes->post('/user/change-password', 'User::update_security');
 $routes->get('/user/logout', 'User::logout');
 
+// Home
+$routes->get('/home', 'Home::home');
+
 // Test Routes
 $routes->get('/test', 'Test::index');
 $routes->get('/test/get-session', 'Test::getSession');
