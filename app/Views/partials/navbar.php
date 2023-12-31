@@ -37,8 +37,8 @@
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="https://sb-admin-pro.startbootstrap.com/assets/img/illustrations/profiles/profile-1.png" />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">Valerie Luna</div>
-                        <div class="dropdown-user-details-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91e7fde4fff0d1f0fefdbff2fefc">[email&#160;protected]</a></div>
+                        <div class="dropdown-user-details-name"><?php echo  $navbar_data['name'] ?></div>
+                        <div class="dropdown-user-details-email"><?php echo  $navbar_data['email'] ?></div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
