@@ -50,6 +50,11 @@ class UserModel extends Model
         return $user;
     }
 
+    public function getNavbardetails($userid){
+        $user = $this->select('email, name')->where('id', $userid)->first();
+        return $user;
+    }
+
     public function updatePassword($userid, $data){
         $this->set($data)
             ->where($this->primaryKey, $userid)

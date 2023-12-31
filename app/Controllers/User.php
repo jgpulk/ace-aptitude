@@ -102,6 +102,10 @@ class User extends BaseController
                 $result = $userModel->getProfileData($userid, 'id, name, email, phone, dob, gender');
                 if($result['status']){
                     $data['profile'] = $result['user'];
+                    $data['navbar_data'] = array(
+                        'email' => $result['user']['email'],
+                        'name' => $result['user']['name']
+                    );
                 } else{
                     session()->setFlashdata('error_message', $result['message']);
                     return redirect()->to('user/login');
@@ -141,7 +145,8 @@ class User extends BaseController
                 } else{
                     // print_r($this->validation->getErrors());
                     $this->session->setFlashdata('error_message', 'Validation failed!');
-                    return view('profile', ['validation' => $this->validation, 'prev_data' => $this->request->getPost()]);
+                    $navbar_data = $this->userModel->getNavbardetails($userid);
+                    return view('profile', ['validation' => $this->validation, 'prev_data' => $this->request->getPost(), 'navbar_data' => $navbar_data]);
                 }
             } else{
                 return redirect()->to('user/login');
