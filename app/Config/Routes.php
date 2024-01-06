@@ -20,6 +20,9 @@ $routes->get('/user/logout', 'User::logout');
 // Home
 $routes->get('/home', 'Home::home');
 
+// Admin Routes
+$routes->get('/admin/login', 'User::index');
+
 // Test Routes
 $routes->get('/test', 'Test::index');
 $routes->get('/test/get-session', 'Test::getSession');
