@@ -21,7 +21,7 @@ $routes->get('/user/logout', 'User::logout');
 $routes->get('/home', 'Home::home');
 
 // Admin Routes
-$routes->get('/admin/login', 'User::index');
+$routes->get('/admin/login', 'Admin\Auth::index');
 
 // Test Routes
 $routes->get('/test', 'Test::index');
