@@ -22,6 +22,10 @@ class Auth extends BaseController
                 $password = $this->request->getPost('password');
                 if($email == env("ADMIN_USERNAME") && $password == env("ADMIN_PASSWORD")){
                     echo "Admin account authorized";
+                    $userdata = [
+                        'is_admin_logged_in' => 1
+                    ];
+                    $this->session->set($userdata);
                 } else{
                     $this->session->setFlashdata('error_message', 'Invalid username/password');
                     return redirect()->to('admin/login');
