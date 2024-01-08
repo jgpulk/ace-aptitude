@@ -26,12 +26,26 @@ class Auth extends BaseController
                         'is_admin_logged_in' => 1
                     ];
                     $this->session->set($userdata);
+                    return redirect()->to('admin/home');
                 } else{
                     $this->session->setFlashdata('error_message', 'Invalid username/password');
                     return redirect()->to('admin/login');
                 }
             } else{
                 return view('admin/login', ['validation' => $this->validation, 'prev_data' => $this->request->getPost()]);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function home(){
+        try {
+            $isLoggedIn = session()->has('is_admin_logged_in');
+            if(isset($isLoggedIn) && $isLoggedIn){
+                echo "admin home page";
+            } else{
+                return redirect()->to('admin/login');
             }
         } catch (\Throwable $th) {
             throw $th;
