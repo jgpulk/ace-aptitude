@@ -43,10 +43,19 @@ class Auth extends BaseController
         try {
             $isLoggedIn = session()->has('is_admin_logged_in');
             if(isset($isLoggedIn) && $isLoggedIn){
-                echo "admin home page";
+                return view('admin/home');
             } else{
                 return redirect()->to('admin/login');
             }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function logout(){
+        try {
+            session()->destroy();
+            return redirect()->to('admin/login');
         } catch (\Throwable $th) {
             throw $th;
         }
