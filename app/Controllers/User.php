@@ -85,8 +85,7 @@ class User extends BaseController
                     return redirect()->to('user/login');
                 }
             } else{
-                $data['validation_errors'] = $this->validator->getErrors();
-                return view('login', $data);
+                return view('login', ['validation' => $this->validation, 'prev_data' => $this->request->getPost()]);
             }
         } catch (\Throwable $th) {
             throw $th;

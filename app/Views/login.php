@@ -79,21 +79,20 @@
               </div>
             <?php } ?>
             <!-- End of alerts -->
-            <?php 
-              if(isset($validation_errors)){
-                echo "<pre>";
-                print_r($validation_errors);
-                echo "</pre>";
-              }
-            ?>
-
+            
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+                <input type="email" class="form-control <?php echo (isset($validation) && $validation->hasError('email'))?'is-invalid':'' ?>" id="floatingInput" name="email" placeholder="name@example.com" value="<?php echo (isset($validation)?$prev_data['email']:'') ?>">
                 <label for="floatingInput">Email address</label>
+                <div id="nameFeedback" class="invalid-feedback">
+                  <?= isset($validation) ? $validation->getError('email') : '' ?>
+              </div>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                <input type="password" class="form-control <?php echo (isset($validation) && $validation->hasError('password'))?'is-invalid':'' ?>" id="floatingPassword" name="password" placeholder="Password">
                 <label for="floatingPassword">Password</label>
+                <div id="nameFeedback" class="invalid-feedback">
+                  <?= isset($validation) ? $validation->getError('password') : '' ?>
+              </div>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
         </form>
