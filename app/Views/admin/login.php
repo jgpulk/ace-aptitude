@@ -61,7 +61,7 @@
     </div>
 
     <main class="form-signin w-100 m-auto">
-      <form action="<?php echo base_url('user/login') ?>" method="post">
+      <form action="<?php echo base_url('admin/login') ?>" method="post">
         <img class="mb-4 mx-auto d-block" src="https://seeklogo.com/images/E/education-circle-logo-7FB9212F5A-seeklogo.com.png" alt="" width="100" height="100">
         <h1 class="h3 mb-3 fw-normal text-center">Admin Login</h1>
 
@@ -80,12 +80,18 @@
         <?php } ?>
 
         <div class="form-floating">
-          <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+          <input type="email" class="form-control <?php echo (isset($validation) && $validation->hasError('email'))?'is-invalid':'' ?>" id="floatingInput" name="email" placeholder="name@example.com" value="<?php echo (isset($validation)?$prev_data['email']:'') ?>">
           <label for="floatingInput">Email address</label>
+          <div id="nameFeedback" class="invalid-feedback">
+            <?= isset($validation) ? $validation->getError('email') : '' ?>
+          </div>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+          <input type="password" class="form-control <?php echo (isset($validation) && $validation->hasError('password'))?'is-invalid':'' ?>" id="floatingPassword" name="password" placeholder="Password">
           <label for="floatingPassword">Password</label>
+          <div id="nameFeedback" class="invalid-feedback">
+            <?= isset($validation) ? $validation->getError('password') : '' ?>
+          </div>
         </div>
         <button class="btn btn-primary w-100 py-2 mt-2" type="submit">Log in</button>
       </form>
