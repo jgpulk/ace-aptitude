@@ -23,6 +23,7 @@ $routes->get('/home', 'Home::home');
 // Admin Routes
 $routes->get('/admin/login', 'Admin\Auth::index');
 $routes->post('/admin/login', 'Admin\Auth::login_submission');
+$routes->get('/admin/logout', 'Admin\Auth::logout');
 $routes->get('/admin/home', 'Admin\Auth::home');
 
 // Test Routes
