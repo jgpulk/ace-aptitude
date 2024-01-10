@@ -26,7 +26,7 @@ class Auth extends BaseController
                         'is_admin_logged_in' => 1
                     ];
                     $this->session->set($userdata);
-                    return redirect()->to('admin/home');
+                    return redirect()->to('admin/dashboard');
                 } else{
                     $this->session->setFlashdata('error_message', 'Invalid username/password');
                     return redirect()->to('admin/login');
@@ -39,11 +39,11 @@ class Auth extends BaseController
         }
     }
 
-    public function home(){
+    public function dashboard(){
         try {
             $isLoggedIn = session()->has('is_admin_logged_in');
             if(isset($isLoggedIn) && $isLoggedIn){
-                return view('admin/home');
+                return view('admin/dashboard');
             } else{
                 return redirect()->to('admin/login');
             }

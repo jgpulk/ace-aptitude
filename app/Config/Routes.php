@@ -24,7 +24,7 @@ $routes->get('/home', 'Home::home');
 $routes->get('/admin/login', 'Admin\Auth::index');
 $routes->post('/admin/login', 'Admin\Auth::login_submission');
 $routes->get('/admin/logout', 'Admin\Auth::logout');
-$routes->get('/admin/home', 'Admin\Auth::home');
+$routes->get('/admin/dashboard', 'Admin\Auth::dashboard');
 
 // Test Routes
 $routes->get('/test', 'Test::index');
