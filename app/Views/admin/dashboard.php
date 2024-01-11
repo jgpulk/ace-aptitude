@@ -18,6 +18,7 @@
     <?php require('partials/navbar.php'); ?>
     
     <div id="layoutSidenav">
+        <?php require('partials/sidenavbar.php'); ?>
         <div id="layoutSidenav_content">
             <main class="container mt-4">
                 <div class="card mb-4">
