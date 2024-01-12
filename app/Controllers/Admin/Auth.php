@@ -21,7 +21,6 @@ class Auth extends BaseController
                 $email = $this->request->getPost('email');
                 $password = $this->request->getPost('password');
                 if($email == env("ADMIN_USERNAME") && $password == env("ADMIN_PASSWORD")){
-                    echo "Admin account authorized";
                     $userdata = [
                         'is_admin_logged_in' => 1
                     ];
@@ -43,7 +42,8 @@ class Auth extends BaseController
         try {
             $isLoggedIn = session()->has('is_admin_logged_in');
             if(isset($isLoggedIn) && $isLoggedIn){
-                return view('admin/dashboard');
+                $data['active_tab'] = 'dashboard';
+                return view('admin/dashboard',$data);
             } else{
                 return redirect()->to('admin/login');
             }
