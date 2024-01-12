@@ -25,6 +25,7 @@ $routes->get('/admin/login', 'Admin\Auth::index');
 $routes->post('/admin/login', 'Admin\Auth::login_submission');
 $routes->get('/admin/logout', 'Admin\Auth::logout');
 $routes->get('/admin/dashboard', 'Admin\Auth::dashboard');
+$routes->get('/admin/import_questions', 'Admin\QuestionPool::index');
 
 // Test Routes
 $routes->get('/test', 'Test::index');

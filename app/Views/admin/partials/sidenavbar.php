@@ -11,11 +11,17 @@
                     <div class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                     User Management
                 </a>
-                <div class="sidenav-menu-heading">Import</div>
-                <a class="nav-link" href="javascript:void(0);">
+                <a class="nav-link collapsed <?php echo ($active_tab=='import_qstn')?'active':''?>" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseQuestionPool" aria-expanded="false" aria-controls="collapseQuestionPool">
                     <div class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                     Question Pool
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <div class="collapse" id="collapseQuestionPool" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link <?php echo ($active_tab=='import_qstn')?'active':''?>" href="<?php echo site_url('admin/import_questions') ?>">Import</a>
+                        <a class="nav-link" href="javascript:void(0);">Manage</a>
+                    </nav>
+                </div>
             </div>
         </div>
     </nav>
