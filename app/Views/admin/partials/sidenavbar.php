@@ -11,7 +11,7 @@
                     <div class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                     User Management
                 </a>
-                <a class="nav-link collapsed <?php echo ($active_tab=='import_qstn')?'active':''?>" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseQuestionPool" aria-expanded="false" aria-controls="collapseQuestionPool">
+                <a class="nav-link collapsed <?php echo ($active_tab=='import_qstn')?'active':''?>" id="questionPool" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseQuestionPool" aria-expanded="false" aria-controls="collapseQuestionPool">
                     <div class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
                     Question Pool
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
