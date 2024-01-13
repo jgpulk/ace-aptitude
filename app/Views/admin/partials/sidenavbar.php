@@ -19,7 +19,7 @@
                 <div class="collapse" id="collapseQuestionPool" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                         <a class="nav-link <?php echo ($active_tab=='import_qstn')?'active':''?>" href="<?php echo site_url('admin/import_questions') ?>">Import</a>
-                        <a class="nav-link" href="javascript:void(0);">Manage</a>
+                        <a class="nav-link" href="javascript:void(0);">List</a>
                     </nav>
                 </div>
             </div>
