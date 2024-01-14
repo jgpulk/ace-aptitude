@@ -44,7 +44,7 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <form action="#" method="post">
+                            <form action="#" method="post" id="formUpload">
                                 <div class="mb-3">
                                     <label for="uploadFile" class="mb-1">Select file</label><span class="required"> *</span>
                                     <input class="form-control" id="uploadFile" name="upload_file" type="file">
@@ -71,13 +71,16 @@
                 $('#collapseQuestionPool').addClass('show')
             }
 
-            $('#importBtn').click(function(e){
+            $("#formUpload").on('submit',(function(e) {
                 e.preventDefault(e);
-                let data = {}
+                var formData = new FormData(document.getElementById('formUpload'));
+                console.log(formData);
                 $.ajax({
                     url: '<?= site_url('admin/import_questions'); ?>',
                     type: 'POST',
-                    data: data,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
                         if(response.status){
@@ -97,7 +100,7 @@
                         console.log(error);
                     }
                 });
-            })
+            }))
         })
     </script>
 </body>

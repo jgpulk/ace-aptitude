@@ -23,7 +23,7 @@ class QuestionPool extends BaseController
     public function importQuestionsSubmission(){
         try {
             $rules = [
-                'upload_file' => 'required'
+                'upload_file' => 'uploaded[upload_file]|mime_in[upload_file,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]|max_size[upload_file,10240]'
             ];
             if($this->validate($rules)){
                 $response = ['status'=> true];
