@@ -4,9 +4,16 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\Models\Admin\AdminModel;
 
 class QuestionPool extends BaseController
 {
+    protected $admin_model;
+
+    public function __construct(){
+        $this->admin_model = new AdminModel();
+    }
+
     public function index(){
         try {
             $isLoggedIn = session()->has('is_admin_logged_in');
@@ -34,8 +41,8 @@ class QuestionPool extends BaseController
 
                 $spreadsheet = IOFactory::load($tempPath . $file->getName());
                 $sheet = $spreadsheet->getActiveSheet();
-
-                $data = [];
+                
+                $questions = [];
                 foreach ($sheet->getRowIterator() as $key => $row) {
                     if($key>=3){
                         $cellIterator = $row->getCellIterator();
@@ -45,7 +52,7 @@ class QuestionPool extends BaseController
                         foreach ($cellIterator as $cell) {
                             $rowData[] = $cell->getValue();
                         }
-                        $data[] = [
+                        $questions[] = [
                             'section' => $rowData[2],
                             'sub_section' => $rowData[3],
                             'question' => $rowData[4],
@@ -62,13 +69,20 @@ class QuestionPool extends BaseController
                     }
                 }
                 unlink($tempPath . $file->getName());
-                $response = ['status'=> true, 'spreadsheet_data' =>  $data];
+                $inserted_count = $this->admin_model->upload_questions($questions);
+                if(count($questions) == $inserted_count){
+                    $response = ['status'=> true, 'message'=> 'Upload completed'];
+                } else{
+                    $response = ['status'=> false, 'message'=> 'Not fully inserted'];
+                }
             } else{
                 $response = ['status'=> false, 'message'=> 'Server side validation failed', 'errors'=> $this->validation->getErrors()];
             }
             return $this->response->setJSON($response);
         } catch (\Throwable $th) {
-            unlink($tempPath . $file->getName());
+            if(file_exists($tempPath . $file->getName())){
+                unlink($tempPath . $file->getName());
+            }
             throw $th;
         }
     }
