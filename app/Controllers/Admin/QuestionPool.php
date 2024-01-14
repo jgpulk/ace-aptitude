@@ -19,4 +19,20 @@ class QuestionPool extends BaseController
             throw $th;
         }
     }
+
+    public function importQuestionsSubmission(){
+        try {
+            $rules = [
+                'upload_file' => 'required'
+            ];
+            if($this->validate($rules)){
+                $response = ['status'=> true];
+            } else{
+                $response = ['status'=> false, 'message'=> 'Server side validation failed', 'errors'=> $this->validation->getErrors()];
+            }
+            return $this->response->setJSON($response);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
