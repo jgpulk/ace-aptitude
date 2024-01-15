@@ -22,25 +22,40 @@
         <div id="layoutSidenav_content">
             <main class="">
                 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                        <div class="container-fluid px-4">
-                            <div class="page-header-content">
-                                <div class="row align-items-center justify-content-between pt-3">
-                                    <div class="col-auto mb-3">
-                                        <h1 class="page-header-title">
-                                            <div class="page-header-icon"><i data-feather="upload"></i></div>
-                                            Import Questions
-                                        </h1>
-                                    </div>
-                                    <div class="col-12 col-xl-auto mb-3">
-                                        <a class="btn btn-sm btn-light text-primary" href="javascript:void(0);">
-                                            <i class="me-1" data-feather="list"></i>
-                                            List
-                                        </a>
-                                    </div>
+                    <div class="container-fluid px-4">
+                        <div class="page-header-content">
+                            <div class="row align-items-center justify-content-between pt-3">
+                                <div class="col-auto mb-3">
+                                    <h1 class="page-header-title">
+                                        <div class="page-header-icon"><i data-feather="upload"></i></div>
+                                        Import Questions
+                                    </h1>
+                                </div>
+                                <div class="col-12 col-xl-auto mb-3">
+                                    <a class="btn btn-sm btn-light text-primary" href="javascript:void(0);">
+                                        <i class="me-1" data-feather="list"></i>
+                                        List
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </header>
+                    </div>
+                </header>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="#" method="post" id="formUpload">
+                                <div class="mb-3">
+                                    <label for="uploadFile" class="mb-1">Select file</label><span class="required"> *</span>
+                                    <input class="form-control" id="uploadFile" name="upload_file" type="file">
+                                    <div id="uploadFileFeedback" class="invalid-feedback">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="importBtn" type="submit">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -55,6 +70,37 @@
                 $('#questionPool').removeClass('collapsed')
                 $('#collapseQuestionPool').addClass('show')
             }
+
+            $("#formUpload").on('submit',(function(e) {
+                e.preventDefault(e);
+                var formData = new FormData(document.getElementById('formUpload'));
+                console.log(formData);
+                $.ajax({
+                    url: '<?= site_url('admin/import_questions'); ?>',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (response, textStatus, xhr) {
+                        if(response.status){
+                            alert('success')
+                        } else{
+                            if(response.errors){
+                                $.each(response.errors, function(field, message) {
+                                    $('[name="' + field + '"]').addClass('is-invalid');
+                                    $('[name="' + field + '"]').next('div').text(message)
+                                });
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            }))
         })
     </script>
 </body>
