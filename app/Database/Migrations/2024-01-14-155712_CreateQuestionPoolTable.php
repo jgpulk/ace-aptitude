@@ -53,7 +53,8 @@ class CreateQuestionPoolTable extends Migration
                 'type' => 'TINYINT'
             ],
             'explanation' => [
-                'type' => 'TEXT'
+                'type' => 'TEXT',
+                'default' => NULL
             ],
             'difficulty' => [
                 'type' => 'TEXT'
