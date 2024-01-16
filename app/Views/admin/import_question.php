@@ -13,8 +13,8 @@
             top: 3.625rem;
         }
     </style>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> -->
     <style>
         .dropzone {
             background: white;
@@ -57,10 +57,16 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <form action="#" method="post" id="formUpload" class="dropzone">
-                                <div class="dz-message">Drop files here or click to upload.</div>
+                            <form action="" method="post" id="formUpload" class="">
+                                <div class="mb-3">
+                                    <label for="uploadFile" class="mb-1">Select file</label><span class="required"> *</span>
+                                    <input class="form-control" id="uploadFile" name="upload_file" type="file">
+                                    <div id="uploadFileFeedback" class="invalid-feedback">
+                                    </div>
+                                </div>
+                                <button class="btn mt-2 btn-primary" id="importBtn" type="submit">Upload</button>
+                                <!-- <div class="dz-message">Drop files here or click to upload.</div> -->
                             </form>
-                            <button class="btn mt-2 btn-primary" id="importBtn" type="submit">Upload</button>
                         </div>
                     </div>
                 </div>
