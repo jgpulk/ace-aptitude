@@ -15,13 +15,6 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-7 py-5">
                         <h3>Register</h3>
-                        <?php 
-                            if(Isset($validation_errors)){
-                                echo "<pre>";
-                                print_r($validation_errors);
-                                echo "</pre>";
-                            }
-                        ?>
                         <p class="mb-4">"Believe you can and you're halfway there" -Theodore Roosevelt</p>
 
                         <!-- Alerts -->
@@ -37,31 +30,46 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <div class="form-group first">
-                                        <input type="text" class="form-control" placeholder="Name" name="name" id="name">
+                                        <input type="text" class="form-control <?php echo (isset($validation) && $validation->hasError('name'))?'is-invalid':'' ?>" placeholder="Name" name="name" id="name" value="<?php echo (isset($validation)?$prev_data['name']:'') ?>">
+                                        <div id="nameFeedback" class="invalid-feedback">
+                                            <?= isset($validation) ? $validation->getError('name') : '' ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group first">
-                                        <input type="text" class="form-control" placeholder="Email" name="email" id="email">
+                                        <input type="text" class="form-control <?php echo (isset($validation) && $validation->hasError('email'))?'is-invalid':'' ?>" placeholder="Email" name="email" id="email" value="<?php echo (isset($validation)?$prev_data['email']:'') ?>">
+                                        <div id="nameFeedback" class="invalid-feedback">
+                                            <?= isset($validation) ? $validation->getError('email') : '' ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-md-12">
                                     <div class="form-group first">
-                                        <input type="text" class="form-control" placeholder="Phone number" name="phone" id="phone">
+                                        <input type="text" class="form-control <?php echo (isset($validation) && $validation->hasError('phone'))?'is-invalid':'' ?>" placeholder="Phone number" name="phone" id="phone" value="<?php echo (isset($validation)?$prev_data['phone']:'') ?>">
+                                        <div id="nameFeedback" class="invalid-feedback">
+                                            <?= isset($validation) ? $validation->getError('phone') : '' ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group last mb-3">
-                                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                                        <input type="password" class="form-control <?php echo (isset($validation) && $validation->hasError('password'))?'is-invalid':'' ?>" placeholder="Password" name="password" id="password">
+                                        <div id="nameFeedback" class="invalid-feedback">
+                                            <?= isset($validation) ? $validation->getError('password') : '' ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group last mb-3">
-                                        <input type="password" class="form-control" placeholder="Retype Password" name="re_password" id="re-password">
+                                        <input type="password" class="form-control <?php echo (isset($validation) && $validation->hasError('re_password'))?'is-invalid':'' ?>" placeholder="Retype Password" name="re_password" id="re-password">
+                                        <div id="nameFeedback" class="invalid-feedback">
+                                            <?= isset($validation) ? $validation->getError('re_password') : '' ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
