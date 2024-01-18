@@ -44,14 +44,22 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <form action="" method="post" id="formUpload" class="">
+                            <div align="right">
+                                <a href="<?php echo base_url('assets/templates/Question Pool - Format.xlsx'); ?>">
+                                    <button class="btn btn-outline-primary btn-sm text-end" type="button">
+                                        <i data-feather="download"></i>
+                                        <span>Sample template</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <form action="" method="post" id="formUpload" class="mt-2">
                                 <div class="mb-3">
                                     <label for="uploadFile" class="mb-1">Select file</label><span class="required"> *</span>
                                     <input class="form-control" id="uploadFile" name="upload_file" type="file">
                                     <div id="uploadFileFeedback" class="invalid-feedback">
                                     </div>
                                 </div>
-                                <button class="btn mt-2 btn-primary" id="importBtn" type="submit">Upload</button>
+                                <button class="btn mt-2 btn-primary" id="importBtn" type="submit" disabled>Upload</button>
                             </form>
                         </div>
                     </div>
@@ -71,10 +79,9 @@
                 $('#collapseQuestionPool').addClass('show')
             }
 
-            $("#formUpload").on('submit',(function(e) {
+            $('#formUpload').on('submit',(function(e) {
                 e.preventDefault(e);
                 var formData = new FormData(document.getElementById('formUpload'));
-                console.log(formData);
                 $.ajax({
                     url: '<?= site_url('admin/import_questions'); ?>',
                     type: 'POST',
@@ -101,6 +108,11 @@
                     }
                 });
             }))
+
+            $('#uploadFile').change(function(e){
+                e.preventDefault(e);
+                console.log("File changed");
+            })
         })
     </script>
 </body>
