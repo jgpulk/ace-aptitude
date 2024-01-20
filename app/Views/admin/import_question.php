@@ -12,6 +12,26 @@
             padding-left: 15rem;
             top: 3.625rem;
         }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #0061f2;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 2s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body class="nav-fixed">
@@ -58,6 +78,7 @@
                                     <input class="form-control" id="uploadFile" name="upload_file" type="file">
                                     <div id="uploadFileFeedback" class="invalid-feedback">
                                     </div>
+                                    <span class="loader mt-3" id="loader" style="display: none;"></span>
                                 </div>
                                 <div class="alert alert-danger" role="alert" id="excelErrors" style="display: none;">
                                 </div>
@@ -83,6 +104,7 @@
 
             $('#formUpload').on('submit',(function(e) {
                 e.preventDefault(e);
+                $('#loader').show()
                 var formData = new FormData(document.getElementById('formUpload'));
                 $.ajax({
                     url: '<?= site_url('admin/import_questions'); ?>',
@@ -92,6 +114,7 @@
                     contentType: false,
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
+                        $('#loader').hide()
                         if(response.status){
                             alert('success')
                         } else{
@@ -104,6 +127,7 @@
                         }
                     },
                     error: function (xhr, status, error) {
+                        $('#loader').hide()
                         console.log(xhr);
                         console.log(status);
                         console.log(error);
@@ -115,6 +139,7 @@
                 e.preventDefault(e);
                 $('#importBtn').attr('disabled', false)
                 $('#excelErrors').empty().hide()
+                $('#loader').show()
                 var formData = new FormData(document.getElementById('formUpload'));
                 $.ajax({
                     url: '<?= site_url('admin/validate_import_questions'); ?>',
@@ -124,6 +149,7 @@
                     contentType: false,
                     dataType: 'json',
                     success: function (response, textStatus, xhr) {
+                        $('#loader').hide()
                         if(response.status){
                             $('#importBtn').attr('disabled', false)
                         } else{
@@ -146,6 +172,7 @@
                         }
                     },
                     error: function (xhr, status, error) {
+                        $('#loader').hide()
                         console.log(xhr);
                         console.log(status);
                         console.log(error);
