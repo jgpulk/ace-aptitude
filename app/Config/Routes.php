@@ -26,6 +26,7 @@ $routes->post('/admin/login', 'Admin\Auth::login_submission');
 $routes->get('/admin/logout', 'Admin\Auth::logout');
 $routes->get('/admin/dashboard', 'Admin\Auth::dashboard');
 $routes->get('/admin/import_questions', 'Admin\QuestionPool::index');
+$routes->post('/admin/validate_import_questions', 'Admin\QuestionPool::importQuestionValidator');
 $routes->post('/admin/import_questions', 'Admin\QuestionPool::importQuestionsSubmission');
 
 // Test Routes

@@ -59,7 +59,9 @@
                                     <div id="uploadFileFeedback" class="invalid-feedback">
                                     </div>
                                 </div>
-                                <button class="btn mt-2 btn-primary" id="importBtn" type="submit" disabled>Upload</button>
+                                <div class="alert alert-danger" role="alert" id="excelErrors" style="display: none;">
+                                </div>
+                                <button class="btn btn-primary" id="importBtn" type="submit" disabled>Upload</button>
                             </form>
                         </div>
                     </div>
@@ -111,7 +113,49 @@
 
             $('#uploadFile').change(function(e){
                 e.preventDefault(e);
-                console.log("File changed");
+                $('#importBtn').attr('disabled', false)
+                $('#excelErrors').empty().hide()
+                var formData = new FormData(document.getElementById('formUpload'));
+                $.ajax({
+                    url: '<?= site_url('admin/validate_import_questions'); ?>',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function (response, textStatus, xhr) {
+                        if(response.status){
+                            $('#importBtn').attr('disabled', false)
+                        } else{
+                            $('#importBtn').attr('disabled', true)
+                            if(response.errors){
+                                $.each(response.errors, function(field, message) {
+                                    $('[name="' + field + '"]').addClass('is-invalid')
+                                    $('[name="' + field + '"]').next('div').text(message)
+                                });
+                            }
+                            if(response.excel_errors){
+                                $('#excelErrors').empty()
+                                let ulElement = $('<ul>')
+                                $.each(response.excel_errors, function(index, error) {
+                                    ulElement.append('<li>' + error + '</li>')
+                                });
+                                $('#excelErrors').append(ulElement)
+                                $('#excelErrors').show()
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            })
+
+            $('.form-control').on('input', function() {
+                $(this).removeClass('is-invalid')
+                $('#importBtn').attr('disabled', false)
             })
         })
     </script>
