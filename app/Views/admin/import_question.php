@@ -36,7 +36,7 @@
 </head>
 <body class="nav-fixed">
     <?php require('partials/navbar.php'); ?>
-    
+
     <div id="layoutSidenav">
         <?php require('partials/sidenavbar.php'); ?>
         <div id="layoutSidenav_content">
@@ -91,18 +91,21 @@
         </div>
     </div>
 
-    <div class="toast position-absolute bottom-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+    <?php require(__DIR__ . '/../common/toast.php'); ?>
+
+    <!-- <div class="toast position-absolute bottom-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header bg-success text-white">
             <i data-feather="check-circle"></i>
             <strong class="mr-auto toast-heading">Toast heading</strong>
             <button class="ml-2 mb-1 btn-close btn-close-white" type="button" data-bs-dismiss="toast" aria-label="Close">                                                            </button>
         </div>
         <div class="toast-body">Toast message here</div>
-    </div>
+    </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="<?php echo base_url('js/sb-admin-pro/scripts.js') ?>"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="<?php echo base_url('js/toast.js') ?>"></script>
     <script>
         let current_tab = '<?php echo $active_tab; ?>'
         $(document).ready(function() {
@@ -125,10 +128,7 @@
                     success: function (response, textStatus, xhr) {
                         $('#loader').hide()
                         if(response.status){
-                            $('.toast-header').removeClass('bg-danger').addClass('bg-success')
-                            $('.toast-heading').text('Success')
-                            $('.toast-body').text(response.message)
-                            $(".toast").toast('show');
+                            show_toast('success',response.message)
                         } else{
                             if(response.errors){
                                 $.each(response.errors, function(field, message) {
@@ -136,19 +136,13 @@
                                     $('[name="' + field + '"]').next('div').text(message)
                                 });
                             }
-                            $('.toast-header').removeClass('bg-success').addClass('bg-danger')
-                            $('.toast-heading').text('Error')
-                            $('.toast-body').text(response.message)
-                            $(".toast").toast('show');
+                            show_toast('error',response.message)
                         }
                     },
                     error: function (xhr, status, error) {
                         $('#loader').hide()
                         let errorResponse = JSON.parse(xhr.responseText)
-                        $('.toast-header').removeClass('bg-success').addClass('bg-danger')
-                        $('.toast-heading').text('500 - Internal Server Error')
-                        $('.toast-body').text(errorResponse.message)
-                        $(".toast").toast('show');
+                        show_toast('500 - Internal Server Error',errorResponse.message)
                         console.log(xhr);
                         console.log(status);
                         console.log(error);
@@ -172,16 +166,10 @@
                     success: function (response, textStatus, xhr) {
                         $('#loader').hide()
                         if(response.status){
-                            $('.toast-header').removeClass('bg-danger').addClass('bg-success')
-                            $('.toast-heading').text('Success')
-                            $('.toast-body').text(response.message)
-                            $(".toast").toast('show');
+                            show_toast('success',response.message)
                             $('#importBtn').attr('disabled', false)
                         } else{
-                            $('.toast-header').removeClass('bg-success').addClass('bg-danger')
-                            $('.toast-heading').text('Error')
-                            $('.toast-body').text(response.message)
-                            $(".toast").toast('show');
+                            show_toast('error',response.message)
                             $('#importBtn').attr('disabled', true)
                             if(response.errors){
                                 $.each(response.errors, function(field, message) {
@@ -203,10 +191,7 @@
                     error: function (xhr, status, error) {
                         $('#loader').hide()
                         let errorResponse = JSON.parse(xhr.responseText)
-                        $('.toast-header').removeClass('bg-success').addClass('bg-danger')
-                        $('.toast-heading').text('500 - Internal Server Error')
-                        $('.toast-body').text(errorResponse.message)
-                        $(".toast").toast('show');
+                        show_toast('500 - Internal Server Error',errorResponse.message)
                         console.log(xhr);
                         console.log(status);
                         console.log(error);
