@@ -85,6 +85,7 @@ class QuestionPool extends BaseController
                         }
                     }
                 }
+                unlink($tempPath . $file->getName());
                 if(count($excel_errors) > 0){
                     $response = ['status'=> false, 'message'=> 'Excel validation failed', 'excel_errors' => $excel_errors];
                 } else{
@@ -95,6 +96,9 @@ class QuestionPool extends BaseController
             }
             return $this->response->setJSON($response);
         } catch (\Throwable $th) {
+            if(file_exists($tempPath . $file->getName())){
+                unlink($tempPath . $file->getName());
+            }
             throw $th;
         }
     }
