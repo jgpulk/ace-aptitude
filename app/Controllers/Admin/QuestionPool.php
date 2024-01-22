@@ -28,6 +28,81 @@ class QuestionPool extends BaseController
         }
     }
 
+    public function importQuestionValidator(){
+        try {
+            $rules = [
+                'upload_file' => 'uploaded[upload_file]|mime_in[upload_file,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]|max_size[upload_file,10240]'
+            ];
+            if($this->validate($rules)){
+                $response = ['status'=> true, 'message'=> 'Server side validation completed. Excel validation started'];
+                $file = $this->request->getFile('upload_file');
+                $newName = $file->getRandomName();
+                $tempPath = ROOTPATH.'public/uploads/question_pool/';
+                $file->move($tempPath, $newName);
+
+                $spreadsheet = IOFactory::load($tempPath . $file->getName());
+                $sheet = $spreadsheet->getActiveSheet();
+                
+                $excel_errors = [];
+                foreach ($sheet->getRowIterator() as $key => $row) {
+                    if($key>=2){
+                        $cellIterator = $row->getCellIterator();
+                        $cellIterator->setIterateOnlyExistingCells(false);
+    
+                        $rowData = [];
+                        foreach ($cellIterator as $cell) {
+                            $rowData[] = $cell->getValue();
+                        }
+
+                        if($key==2){
+                            if(strcasecmp($rowData[2], 'section') != 0){
+                                $excel_errors[] = 'Invalid column name at C2';
+                            }
+                            if(strcasecmp($rowData[3], 'sub section') != 0){
+                                $excel_errors[] = 'Invalid column name at C3';
+                            }
+                            if(strcasecmp($rowData[4], 'question') != 0){
+                                $excel_errors[] = 'Invalid column name at C4';
+                            }
+                            if(strcasecmp($rowData[5], 'option a') != 0){
+                                $excel_errors[] = 'Invalid column name at C5';
+                            }
+                            if(strcasecmp($rowData[6], 'option b') != 0){
+                                $excel_errors[] = 'Invalid column name at C6';
+                            }
+                            if(strcasecmp($rowData[7], 'option c') != 0){
+                                $excel_errors[] = 'Invalid column name at C7';
+                            }
+                            if(strcasecmp($rowData[8], 'option d') != 0){
+                                $excel_errors[] = 'Invalid column name at C8';
+                            }
+                            if(strcasecmp($rowData[9], 'option e') != 0){
+                                $excel_errors[] = 'Invalid column name at C9';
+                            }
+                            if(strcasecmp($rowData[10], 'option f') != 0){
+                                $excel_errors[] = 'Invalid column name at C10';
+                            }   
+                        }
+                    }
+                }
+                unlink($tempPath . $file->getName());
+                if(count($excel_errors) > 0){
+                    $response = ['status'=> false, 'message'=> 'Excel validation failed', 'excel_errors' => $excel_errors];
+                } else{
+                    $response = ['status'=> true, 'message'=> 'Excel validation success'];
+                }
+            } else{
+                $response = ['status'=> false, 'message'=> 'Server side validation failed', 'errors' => $this->validation->getErrors()];
+            }
+            return $this->response->setJSON($response);
+        } catch (\Throwable $th) {
+            if(file_exists($tempPath . $file->getName())){
+                unlink($tempPath . $file->getName());
+            }
+            throw $th;
+        }
+    }
+
     public function importQuestionsSubmission(){
         try {
             $rules = [
