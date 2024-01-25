@@ -70,7 +70,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Enter test name",
+                    "title": "Name of test",
                     "minLength": 4
                 },
                 "sections": {
@@ -84,6 +84,7 @@
                         "properties": {
                             "name": {
                                 "type": "string",
+                                "title": "Name",
                                 "enum": [
                                     "Aptitude",
                                     "Reasoning",
@@ -92,16 +93,20 @@
                                 ]
                             },
                             "easy": {
-                                "type": "number"
+                                "type": "number",
+                                "title": "Easy"
                             },
                             "medium": {
-                                "type": "number"
+                                "type": "number",
+                                "title": "Medium"
                             },
                             "hard": {
-                                "type": "number"
+                                "type": "number",
+                                "title": "Hard"
                             },
                             "total": {
-                                "type": "number"
+                                "type": "number",
+                                "title": "Total"
                             }
                         }
                     }
