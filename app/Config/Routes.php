@@ -28,7 +28,7 @@ $routes->get('/admin/dashboard', 'Admin\Auth::dashboard');
 $routes->get('/admin/import_questions', 'Admin\QuestionPool::index');
 $routes->post('/admin/validate_import_questions', 'Admin\QuestionPool::importQuestionValidator');
 $routes->post('/admin/import_questions', 'Admin\QuestionPool::importQuestionsSubmission');
-$routes->get('/admin/define_test', 'Admin\Assessment::index');
+$routes->get('/admin/define-test', 'Admin\Assessment::index');
 
 // Test Routes
 $routes->get('/test', 'Test::index');

@@ -42,31 +42,7 @@
                     </div>
                 </header>
                 <div class="container">
-                    <h1>Create Test Definition</h1>
-                    <!-- <div class="card">
-                        <div class="card-body">
-                            <div align="right">
-                                <a href="<?php echo base_url('assets/templates/Question Pool - Format.xlsx'); ?>">
-                                    <button class="btn btn-outline-primary btn-sm text-end" type="button">
-                                        <i data-feather="download"></i>
-                                        <span>Sample template</span>
-                                    </button>
-                                </a>
-                            </div>
-                            <form action="" method="post" id="formUpload" class="mt-2">
-                                <div class="mb-3">
-                                    <label for="uploadFile" class="mb-1">Select file</label><span class="required"> *</span>
-                                    <input class="form-control" id="uploadFile" name="upload_file" type="file">
-                                    <div id="uploadFileFeedback" class="invalid-feedback">
-                                    </div>
-                                    <span class="loader mt-3" id="loader" style="display: none;"></span>
-                                </div>
-                                <div class="alert alert-danger" role="alert" id="excelErrors" style="display: none;">
-                                </div>
-                                <button class="btn btn-primary" id="importBtn" type="submit" disabled>Upload</button>
-                            </form>
-                        </div>
-                    </div> -->
+                    <div id="editor_holder"></div>
                 </div>
             </main>
         </div>
@@ -85,6 +61,61 @@
                 $('#collapseAssessment').addClass('show')
             }
         })
+    </script>
+    <script src="<?php echo base_url('js/jsoneditor.js') ?>"></script>
+    <script>
+        let schema =  {
+            "title": "Define a new test",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Enter test name",
+                    "minLength": 4
+                },
+                "sections": {
+                    "type": "array",
+                    "format": "table",
+                    "title": "Sections",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "object",
+                        "title": "Section",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "Aptitude",
+                                    "Reasoning",
+                                    "Logical",
+                                    "Quantative"
+                                ]
+                            },
+                            "easy": {
+                                "type": "number"
+                            },
+                            "medium": {
+                                "type": "number"
+                            },
+                            "hard": {
+                                "type": "number"
+                            },
+                            "total": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Initialize the editor
+        var editor = new JSONEditor(document.getElementById('editor_holder'),{
+            schema: schema,
+            theme: 'bootstrap5',
+            iconlib: 'fontawesome5',
+            format: 'grid'
+        });
     </script>
 </body>
 </html>
