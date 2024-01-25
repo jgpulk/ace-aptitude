@@ -29,6 +29,7 @@
                 </a>
                 <div class="collapse" id="collapseAssessment" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="javascript:void(0);">Define Test</a>
                         <a class="nav-link" href="javascript:void(0);">Generate Test</a>
                     </nav>
                 </div>
