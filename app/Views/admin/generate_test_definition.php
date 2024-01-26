@@ -43,6 +43,7 @@
                 </header>
                 <div class="container">
                     <div id="editor_holder"></div>
+                    <button class="btn btn-primary" id="getJSON" type="submit">Generate</button>
                 </div>
             </main>
         </div>
@@ -121,6 +122,37 @@
             iconlib: 'fontawesome5',
             format: 'grid'
         });
+
+        $(document).ready(function() {
+            $('#getJSON').on('click',function(e) {
+                let jsonData = editor.getValue()
+                console.log(jsonData);
+                if(!(jsonData.name && jsonData != '')){
+                    alert('Invalid test name')
+                    return
+                }
+                if(!(jsonData.sections)){
+                    alert('sections data not found')
+                    return
+                }
+                if(jsonData.sections.length == 0){
+                    alert('At least one section need to be selected')
+                    return
+                }
+                jsonData.sections.forEach(section => {
+                    if(section.easy==0 && section.medium==0 && section.hard==0 && section.total==0){
+                        alert('Atleast 1 question need to be added')
+                        return
+                    }
+
+                    if(section.easy + section.medium + section.hard!=section.total){
+                        alert('Invalid total count')
+                        return
+                    }
+                });
+
+            })
+        })
     </script>
 </body>
 </html>
