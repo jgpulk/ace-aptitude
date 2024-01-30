@@ -72,7 +72,8 @@
                 "name": {
                     "type": "string",
                     "title": "Name of test",
-                    "minLength": 4
+                    "minLength": 4,
+                    "default": 'Test Definfition - ' + Math.ceil(Math.random()*1000)
                 },
                 "sections": {
                     "type": "array",
@@ -110,7 +111,16 @@
                                 "title": "Total"
                             }
                         }
-                    }
+                    },
+                    "default": [
+                        {
+                            "name": "Aptitude",
+                            "easy": 1,
+                            "medium": 1,
+                            "hard": 1,
+                            "total": 3
+                        }
+                    ]
                 }
             }
         }
@@ -125,32 +135,59 @@
 
         $(document).ready(function() {
             $('#getJSON').on('click',function(e) {
+                let generate = true
                 let jsonData = editor.getValue()
                 console.log(jsonData);
                 if(!(jsonData.name && jsonData != '')){
+                    generate = false
                     alert('Invalid test name')
                     return
                 }
                 if(!(jsonData.sections)){
+                    generate = false
                     alert('sections data not found')
                     return
                 }
                 if(jsonData.sections.length == 0){
+                    generate = false
                     alert('At least one section need to be selected')
                     return
                 }
                 jsonData.sections.forEach(section => {
                     if(section.easy==0 && section.medium==0 && section.hard==0 && section.total==0){
+                        generate = false
                         alert('Atleast 1 question need to be added')
                         return
                     }
 
                     if(section.easy + section.medium + section.hard!=section.total){
+                        generate = false
                         alert('Invalid total count')
                         return
                     }
                 });
-
+                if(generate){
+                    $.ajax({
+                        url: '<?= site_url('admin/add-test-definition'); ?>',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            definition: jsonData
+                        }),
+                        processData: false,
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        success: function (response, textStatus, xhr) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr);
+                            console.log(status);
+                            console.log(error);
+                        }
+                    });
+                } else{
+                    alert("Test defintion validation failed on user end");
+                }
             })
         })
     </script>
