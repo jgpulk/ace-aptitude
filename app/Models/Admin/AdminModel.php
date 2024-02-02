@@ -16,4 +16,14 @@ class AdminModel extends Model
         }
         return $inserted_count;
     }
+
+    public function add_test_definition($definition){
+        $this->db->table('test_definition')
+                ->insert($definition);
+        if($this->db->affectedRows()==1){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
